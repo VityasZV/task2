@@ -10,28 +10,50 @@
 #define event_hpp
 
 #include "../enums.hpp"
-
-#include <stdio.h>
-#include <vector>
-#include <unordered_map>
-#include <optional>
-#include <string>
+#include "../request/request.hpp"
+#include "../calendar/calendar.hpp"
+#include "../server/server.hpp"
 
 
-
-namespace event {
+namespace modeling::event {
     
-    class Event {//базовое событие в календаре
-        float time;
-        EventType type;   // тип события
-        std::optional<ServerId> server;
-        ClientId client; // дополнительные сведения о событии в зависимости от типа
+    class FinishEvent : public Event{
+        std::shared_ptr<modeling::server::Server> server;
+        ClientId client;
+        std::shared_ptr<modeling::calendar::Calendar> monitor;
+        friend class modeling::server::Server;
     public:
-        Event(float time,
-              EventType type, ClientId client, const std::optional<ServerId> server = std::nullopt): time(time), type(type), client(client), server(server) {}
-        virtual void processing() = 0;
+        FinishEvent(float finish_time, EventType type,
+                    ClientId client,
+                    std::shared_ptr<modeling::calendar::Calendar> monitor, std::shared_ptr<modeling::server::Server> server) :
+                    Event(finish_time, type), client(client), server(server),
+                    monitor(monitor){}
+        void processing() override;
     };
-}// namespace event
-
+    
+    class RequestEvent : public Event {
+        //State server_state;
+        ClientId client;
+        //ServerId server_id;
+        std::shared_ptr<modeling::server::Server> server;
+        std::shared_ptr<modeling::calendar::Calendar> monitor;
+        friend class modeling::server::Server;
+    public:
+        RequestEvent(float time, EventType type, ClientId client, std::shared_ptr<modeling::calendar::Calendar> monitor, std::shared_ptr<modeling::server::Server> server): Event(time, type), client(client), monitor(monitor), server(server){}
+        void processing() override;
+    };
+    
+    class InitialEvent : public Event {
+        std::shared_ptr<modeling::calendar::Calendar> monitor;
+        std::shared_ptr<modeling::server::Server> server;
+        friend class modeling::server::Server;
+    public:
+      
+        InitialEvent(float time, EventType type,
+                     std::shared_ptr<modeling::calendar::Calendar> monitor, std::shared_ptr<modeling::server::Server> server,
+                     std::optional<ClientId> client = std::nullopt) : Event(time, type), monitor(monitor), server(server){}
+        void processing() override;
+    };
+}// namespace modeling::event
 
 #endif /* event_hpp */
