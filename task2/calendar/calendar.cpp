@@ -8,7 +8,8 @@
 
 #include "calendar.hpp"
 
-namespace calendar {
+
+namespace modeling::calendar {
     void Calendar::put(std::shared_ptr<event::Event> &&ev)
     {
         if( empty() ){ emplace_back(ev); return; }
@@ -19,9 +20,9 @@ namespace calendar {
         }
         insert(i, ev);
     }
-    std::shared_ptr<event::Event> Calendar::get()
+    std::optional<std::shared_ptr<event::Event>> Calendar::get()
     {
-        if(empty()) return NULL;
+        if(empty()) return std::nullopt;
         auto last = front();
         pop_front();
         return last;
@@ -38,4 +39,4 @@ namespace calendar {
     }
     
     
-}
+}// namespace modeling::calendar

@@ -9,6 +9,9 @@
 #ifndef enums_hpp
 #define enums_hpp
 
+#include <unordered_map>
+#include <string>
+
 enum class EventType {
     Initialization = 1,
     Request,
@@ -16,9 +19,8 @@ enum class EventType {
 };
 
 enum class State {
-    Run = 1,
-    Idle = 0,
-    Limit = 1000,
+    Idle,
+    Run
 };
 
 enum class ServerId {
@@ -27,9 +29,27 @@ enum class ServerId {
 };
 
 enum class ClientId {
-    None,
     First,
     Second
 };
+
+static const float Limit = 1000;
+static const std::unordered_map<const ClientId, const std::string> out_client = {
+    {ClientId::First, std::string("client:1")},
+    {ClientId::Second, std::string("client:2")},
+};
+
+static const std::unordered_map<const ServerId, const std::string> out_server = {
+    {ServerId::First, "First"},
+    {ServerId::Second, "Second"},
+};
+
+static const std::unordered_map<EventType, const std::string> out_event = {
+    {EventType::Initialization, std::string("Initialization")},
+    {EventType::Request, std::string("Request")},
+    {EventType::Finish, std::string("Finish")},
+};
+
+    
 
 #endif /* enums_hpp */

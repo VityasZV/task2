@@ -6,13 +6,24 @@
 //  Copyright © 2019 Виктор Задябин. All rights reserved.
 //
 
-#include "enums.hpp"
-#include "event/event.hpp"
-#include "request/request.hpp"
+//#include "enums.hpp"
+//#include "event/event.hpp"
 #include "calendar/calendar.hpp"
+#include "module_client_server/modeling.hpp"
+
+#include <exception>
 
 int main(int argc, char **argv )
 {
+    try {
+        modeling::Modeling model_client_server;
+        model_client_server.Start();
+    }
+    catch (const std::exception& ex){
+        std::cout << ex.what();
+    }
+    return 0;
+}
 //    Calendar calendar;
 //    Queue queue;
 //    float curr_time = 0;
@@ -70,7 +81,7 @@ int main(int argc, char **argv )
 //        } // switch
 //        delete curr_ev;
 //    } // while
-} // main
+//} // main
 
 //int rc = 0; int pc = 0;
 //float get_req_time(int source_num)

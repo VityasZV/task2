@@ -9,12 +9,12 @@
 #ifndef request_hpp
 #define request_hpp
 
-#include "../event/event.hpp"
+#include "../enums.hpp"
 
 #include <stdio.h>
 #include <list>
 
-namespace request {
+namespace modeling::request {
     class Request // задание в очереди
     {
     public:
@@ -23,12 +23,11 @@ namespace request {
         Request(float time,
                 ClientId client) : time(time), client(client){}
     };
-    using queue = std::list<std::shared_ptr<Request>>;
     
     float get_req_time(ClientId source_num); // длительность задания
     float get_pause_time(ClientId source_num); // длительность паузы между заданиями
     
-}
+}// namespace modeling::request
 
 
 #endif /* request_hpp */

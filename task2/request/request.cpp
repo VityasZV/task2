@@ -10,7 +10,7 @@
 
 #include <iostream>
 
-namespace request {
+namespace modeling::request {
     static int rc = 0, pc = 0;
     float get_req_time(ClientId source_num)
     {
