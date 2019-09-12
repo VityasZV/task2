@@ -11,9 +11,6 @@
 
 #include "../enums.hpp"
 
-#include <stdio.h>
-#include <list>
-
 namespace modeling::request {
     class Request // задание в очереди
     {

@@ -16,11 +16,15 @@
 #include <list>
 
 namespace modeling{
+    
+//pre declaration for mentioning as friend classes
+//in Server
 namespace event {
     class InitialEvent;
     class RequestEvent;
     class FinishEvent;
-}
+}// event
+    
 namespace server{
     using queue = std::list<std::shared_ptr<request::Request>>;
     class Server {
@@ -33,10 +37,9 @@ namespace server{
         friend class modeling::event::FinishEvent;
 //        modeling::calendar::Calendar monitor;
     public:
-        Server(float working_start = 0) : working_start(working_start){
-            
-        };
+        Server(float working_start = 0) : working_start(working_start){};
     };
-}
-}
+}// server
+    
+}// modeling
 #endif /* server_hpp */

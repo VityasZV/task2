@@ -14,14 +14,14 @@ namespace modeling::request {
     static int rc = 0, pc = 0;
     float get_req_time(ClientId source_num)
     {
-        // Для демонстрационных целей - выдаётся случайное значение
-        // при детализации модели функцию можно доработать
+        // For demonstration purposes - a random value is returned
+        // when detailing the model, the function can be modified
         double r = ((double)rand())/RAND_MAX;
         std::cout << "req " << rc << std::endl; rc++;
         if(source_num == ClientId::First) return r*10; else return r*20;
     }
     
-    float get_pause_time(ClientId source_num) // длительность паузы между заданиями
+    float get_pause_time(ClientId source_num) //pause duration between tasks
     {
         // см. комментарий выше
         double p = ((double)rand())/RAND_MAX;

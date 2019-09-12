@@ -34,6 +34,7 @@ enum class ClientId {
 };
 
 static const float Limit = 1000;
+
 static const std::unordered_map<const ClientId, const std::string> out_client = {
     {ClientId::First, std::string("client:1")},
     {ClientId::Second, std::string("client:2")},

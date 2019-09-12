@@ -9,11 +9,9 @@
 #ifndef calendar_hpp
 #define calendar_hpp
 
-
+#include "../enums.hpp"
 
 #include <list>
-#include <optional>
-#include "../enums.hpp"
 
 namespace modeling{
 

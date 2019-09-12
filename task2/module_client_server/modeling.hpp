@@ -25,25 +25,13 @@ namespace modeling {
     public:
         Modeling() {
             srand(2019);
-//            monitor.put(std::make_shared<event::Event>(event::Event(curr_time, EventType::Initialization, ClientId::None)))
-           // monitor.put(std::make_shared<event::InitialEvent>())
             current_time = 0;
             dt = 0;
             server = std::make_shared<modeling::server::Server>();
             monitor = std::make_shared<modeling::calendar::Calendar>();
-//            InitialEvent(float time, EventType type,
-//            std::shared_ptr<modeling::calendar::Calendar> monitor, std::shared_ptr<modeling::server::Server> server, std::optional<ClientId> client = std::nullopt) : Event(time, type), monitor(monitor), server(server
             monitor->put(std::make_shared<event::InitialEvent>(/*time =*/0, /*type =*/EventType::Initialization, /*monitor =*/monitor, /*server =*/ server, /*client =*/ std::nullopt));
         }
-        void Start() {
-            while ((current_event_opt = monitor->get()).has_value()){
-                auto current_event = *current_event_opt;
-                std::cout << "time: " << current_event->time << " type: " << out_event.at(current_event->type) << std::endl;
-                current_time = current_event->time;
-                if (current_time > Limit) break;
-                current_event->processing();
-            }
-        }
+        void Start();
     };
 }
 
