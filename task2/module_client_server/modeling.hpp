@@ -17,7 +17,7 @@
 
 namespace modeling {
     class Modeling {
-        modeling::calendar::Calendar monitor;
+        std::shared_ptr<modeling::calendar::Calendar> monitor;
         std::shared_ptr<modeling::server::Server> server;
         float current_time;
         float dt;
@@ -30,10 +30,13 @@ namespace modeling {
             current_time = 0;
             dt = 0;
             server = std::make_shared<modeling::server::Server>();
-            monitor.put(std::make_shared<event::InitialEvent>(/*time =*/0, /*type =*/EventType::Initialization, /*monitor =*/std::ref(monitor), /*client*/ std::nullopt));
+            monitor = std::make_shared<modeling::calendar::Calendar>();
+//            InitialEvent(float time, EventType type,
+//            std::shared_ptr<modeling::calendar::Calendar> monitor, std::shared_ptr<modeling::server::Server> server, std::optional<ClientId> client = std::nullopt) : Event(time, type), monitor(monitor), server(server
+            monitor->put(std::make_shared<event::InitialEvent>(/*time =*/0, /*type =*/EventType::Initialization, /*monitor =*/monitor, /*server =*/ server, /*client =*/ std::nullopt));
         }
         void Start() {
-            while ((current_event_opt = monitor.get()).has_value()){
+            while ((current_event_opt = monitor->get()).has_value()){
                 auto current_event = *current_event_opt;
                 std::cout << "time: " << current_event->time << " type: " << out_event.at(current_event->type) << std::endl;
                 current_time = current_event->time;

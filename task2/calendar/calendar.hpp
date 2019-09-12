@@ -26,6 +26,7 @@ namespace event {
         const float time;
         Event(float time, EventType type): time(time), type(type) {}
         virtual void processing() = 0;
+        virtual ~Event() = default;
     };
 }
 namespace calendar{

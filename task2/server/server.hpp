@@ -16,6 +16,11 @@
 #include <list>
 
 namespace modeling{
+namespace event {
+    class InitialEvent;
+    class RequestEvent;
+    class FinishEvent;
+}
 namespace server{
     using queue = std::list<std::shared_ptr<request::Request>>;
     class Server {
@@ -23,9 +28,9 @@ namespace server{
         float working_start;
         ServerId server_id = ServerId::First;
         State server_state = State::Idle;
-//        friend class modeling::event::InitialEvent;
-//        friend class modeling::event::RequestEvent;
-//        friend class modeling::event::FinishEvent;
+        friend class modeling::event::InitialEvent;
+        friend class modeling::event::RequestEvent;
+        friend class modeling::event::FinishEvent;
 //        modeling::calendar::Calendar monitor;
     public:
         Server(float working_start = 0) : working_start(working_start){
