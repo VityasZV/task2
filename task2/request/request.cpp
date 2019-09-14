@@ -23,7 +23,6 @@ namespace modeling::request {
     
     float get_pause_time(ClientId source_num) //pause duration between tasks
     {
-        // см. комментарий выше
         double p = ((double)rand())/RAND_MAX;
         std::cout << "pause " << pc << std::endl; pc++;
         if(source_num == ClientId::First) return p*20; else return p*10;

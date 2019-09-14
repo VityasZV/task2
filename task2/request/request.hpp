@@ -12,17 +12,17 @@
 #include "../enums.hpp"
 
 namespace modeling::request {
-    class Request // задание в очереди
+    class Request // task in queue
     {
     public:
-        float time; // время выполнения задания без прерываний
-        ClientId client; // номер источника заданий (1 или 2)
+        float time; // time of performing task without breaks
+        ClientId client;
         Request(float time,
                 ClientId client) : time(time), client(client){}
     };
     
-    float get_req_time(ClientId source_num); // длительность задания
-    float get_pause_time(ClientId source_num); // длительность паузы между заданиями
+    float get_req_time(ClientId source_num); // task duration
+    float get_pause_time(ClientId source_num); // pause duration between tasks
     
 }// namespace modeling::request
 
