@@ -16,6 +16,7 @@
 namespace modeling{
 
 namespace event {
+    
     class Event {//базовое событие в календаре
     public:
         EventType type;   // тип события
@@ -24,8 +25,11 @@ namespace event {
         virtual void processing() = 0;
         virtual ~Event() = default;
     };
-}
+    
+}//namespace event
+    
 namespace calendar{
+    
     class Calendar: public std::list<std::shared_ptr<modeling::event::Event>> // календарь событий
     {
     public:
@@ -33,8 +37,9 @@ namespace calendar{
         void put (const std::shared_ptr<modeling::event::Event> &ev);
         std::optional<std::shared_ptr<event::Event>> get(); // извлечь первое событие из календаря (с наименьшим модельным временем)
     };
-}
     
-}// namespace modeling::calendar
+}// namespace calendar
+    
+}// namespace modeling
 
 #endif /* calendar_hpp */

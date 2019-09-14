@@ -34,7 +34,9 @@ namespace modeling::event {
         ClientId client;
         const modeling::dependencies::Dependencies& dependencies;
     public:
-        RequestEvent(float time, EventType type, ClientId client, const modeling::dependencies::Dependencies& dependencies): Event(time, type), client(client), dependencies(dependencies){}
+        RequestEvent(float time, EventType type, ClientId client,
+                     const modeling::dependencies::Dependencies& dependencies):
+                        Event(time, type), client(client), dependencies(dependencies){}
         void processing() override;
         ~RequestEvent() = default;
     };
@@ -45,11 +47,12 @@ namespace modeling::event {
       
         InitialEvent(float time, EventType type,
                      const modeling::dependencies::Dependencies& dependencies,
-                     std::optional<ClientId> client = std::nullopt) : Event(time, type),
-                     dependencies(dependencies){}
+                     std::optional<ClientId> client = std::nullopt) :
+                        Event(time, type), dependencies(dependencies){}
         void processing() override;
         ~InitialEvent() = default;
     };
+    
 }// namespace modeling::event
 
 #endif /* event_hpp */

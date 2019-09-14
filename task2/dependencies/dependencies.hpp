@@ -23,6 +23,6 @@ namespace modeling::dependencies {
         monitor(monitor), server(server){}
         
     };
-}
+}// modeling::dependencies
 
 #endif /* dependencies_hpp */

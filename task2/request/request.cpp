@@ -17,7 +17,7 @@ namespace modeling::request {
         // For demonstration purposes - a random value is returned
         // when detailing the model, the function can be modified
         double r = ((double)rand())/RAND_MAX;
-        std::cout << "req " << rc << std::endl; rc++;
+        std::cout << "request number: " << rc++ << std::endl;
         if(source_num == ClientId::First) return r*10; else return r*20;
     }
     

@@ -20,4 +20,4 @@ namespace modeling {
             current_event->processing();
         }
     }
-}
+}// namespace modeling

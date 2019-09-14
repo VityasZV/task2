@@ -29,10 +29,9 @@ namespace modeling {
             current_time = 0;
             dt = 0;
             dependencies.monitor.put(std::make_shared<event::InitialEvent>(/*time =*/0, EventType::Initialization, dependencies, /*client =*/ std::nullopt));
-
         }
         void Start();
     };
-}
+}// namespace modeling
 
 #endif /* modeling_hpp */

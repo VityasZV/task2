@@ -14,6 +14,7 @@
 namespace modeling::event{
     
 namespace {
+    
     const auto& all_clients = [](){
         return std::vector<const ClientId>{ClientId::First, ClientId::Second, ClientId::Third};
     }();
@@ -42,18 +43,17 @@ namespace {
     
     void InitialEvent::processing() {
         for (const auto& client : all_clients){
-            dependencies.monitor.put(std::make_shared<RequestEvent>(
-            /*time =*/time,
-            /*EventType =*/EventType::Request,
-            /*ClientId =*/client,
-            /*dependencies =*/dependencies));
+            dependencies.monitor.put(std::make_shared<RequestEvent>( time, EventType::Request,
+                                                                     client, dependencies));
         }
     }
     
     void FinishEvent::processing() {
         dependencies.server.server_state = State::Idle;
         //выводим запись о рабочем интервале time=finish_time
-        std::cout << "Работа сервера:" << out_server.at(dependencies.server.server_id)<< " c " << dependencies.server.working_start << " по " << time << " длит. " << time - dependencies.server.working_start << std::endl;
+        std::cout << "Работа сервера:" << out_server.at(dependencies.server.server_id)<<
+        " c " << dependencies.server.working_start << " по " << time << " длит. " <<
+        time - dependencies.server.working_start << std::endl;
         if (!dependencies.server.request_order.empty()){
             const auto& request = dependencies.server.request_order.front();
             dependencies.server.request_order.pop_front();
@@ -79,4 +79,4 @@ namespace {
         dependencies.monitor.put(std::make_shared<RequestEvent>(time + request::get_pause_time(Planning(client)), type,
                                                                 client,dependencies));
     }
-}
+}// namespace modeling::event
