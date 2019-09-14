@@ -9,16 +9,45 @@
 #include "event.hpp"
 
 #include <iostream>
+#include <vector>
 
 namespace modeling::event{
     
+namespace {
+    const auto& all_clients = [](){
+        return std::vector<const ClientId>{ClientId::First, ClientId::Second, ClientId::Third};
+    }();
+    const auto& clients_and_ints =[](){
+        struct clients_and_ints {
+            std::unordered_map<const ClientId, const int> left {
+                {ClientId::First, 1},
+                {ClientId::Second, 2},
+                {ClientId::Third, 3}
+            };
+            std::unordered_map<int, const ClientId> right {
+                {1, ClientId::First},
+                {2, ClientId::Second},
+                {3, ClientId::Third}
+            };
+        };
+        clients_and_ints initializing;
+        return initializing;
+    }();
+    ClientId Planning(ClientId working_client){
+        return clients_and_ints.right.at(
+                        clients_and_ints.left.at(working_client)%3 + 1);
+    }
+    
+}// namespace
+    
     void InitialEvent::processing() {
-        dependencies.monitor.put(std::make_shared<RequestEvent>(
-                                                                time, EventType::Request,
-                                                                ClientId::First,dependencies));
-        dependencies.monitor.put(std::make_shared<RequestEvent>(
-                                                                time, EventType::Request,
-                                                                ClientId::Second, dependencies));
+        for (const auto& client : all_clients){
+            dependencies.monitor.put(std::make_shared<RequestEvent>(
+            /*time =*/time,
+            /*EventType =*/EventType::Request,
+            /*ClientId =*/client,
+            /*dependencies =*/dependencies));
+        }
     }
     
     void FinishEvent::processing() {
@@ -47,7 +76,7 @@ namespace modeling::event{
             dependencies.server.request_order.emplace_back(std::make_shared<request::Request>(dt, client));
         }
         //planning for generation of next task
-        dependencies.monitor.put(std::make_shared<event::RequestEvent>(time + request::get_pause_time(client), type,
-                                                                       client, dependencies));
+        dependencies.monitor.put(std::make_shared<RequestEvent>(time + request::get_pause_time(Planning(client)), type,
+                                                                client,dependencies));
     }
 }
