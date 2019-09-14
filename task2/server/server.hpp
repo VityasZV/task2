@@ -35,7 +35,6 @@ namespace server{
         friend class modeling::event::InitialEvent;
         friend class modeling::event::RequestEvent;
         friend class modeling::event::FinishEvent;
-//        modeling::calendar::Calendar monitor;
     public:
         Server(float working_start = 0) : working_start(working_start){};
     };
