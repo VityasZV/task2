@@ -14,22 +14,22 @@
 #include "../calendar/calendar.hpp"
 #include "../server/server.hpp"
 #include "../event/event.hpp"
+#include "../dependencies/dependencies.hpp"
 
 namespace modeling {
     class Modeling {
-        std::shared_ptr<modeling::calendar::Calendar> monitor;
-        std::shared_ptr<modeling::server::Server> server;
+        const modeling::dependencies::Dependencies& dependencies;
         float current_time;
         float dt;
         std::optional<std::shared_ptr<modeling::event::Event>> current_event_opt;
     public:
-        Modeling() {
+        Modeling(const modeling::dependencies::Dependencies& dependencies) :
+        dependencies(dependencies){
             srand(2019);
             current_time = 0;
             dt = 0;
-            server = std::make_shared<modeling::server::Server>();
-            monitor = std::make_shared<modeling::calendar::Calendar>();
-            monitor->put(std::make_shared<event::InitialEvent>(/*time =*/0, /*type =*/EventType::Initialization, /*monitor =*/monitor, /*server =*/ server, /*client =*/ std::nullopt));
+            dependencies.monitor.put(std::make_shared<event::InitialEvent>(/*time =*/0, EventType::Initialization, dependencies, /*client =*/ std::nullopt));
+
         }
         void Start();
     };
