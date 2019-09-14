@@ -32,11 +32,6 @@ namespace calendar{
         void put (std::shared_ptr<modeling::event::Event> &&ev); // вставить событие в список с упорядочением по полю time (c cемантикой перемещения
         void put (const std::shared_ptr<modeling::event::Event> &ev);
         std::optional<std::shared_ptr<event::Event>> get(); // извлечь первое событие из календаря (с наименьшим модельным временем)
-        ~Calendar() {
-            for (auto& event : *this){
-                event->~Event();
-            }
-        }
     };
 }
     

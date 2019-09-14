@@ -57,7 +57,8 @@ namespace {
         if (!dependencies.server.request_order.empty()){
             const auto& request = dependencies.server.request_order.front();
             dependencies.server.request_order.pop_front();
-            dependencies.monitor.put(std::make_shared<FinishEvent>(time + request->time, type, request->client, dependencies));
+            dependencies.monitor.put(std::make_shared<FinishEvent>(time + request->time, type,
+                                                                   request->client, dependencies));
             dependencies.server.working_start = time;
         }
     }
@@ -67,7 +68,8 @@ namespace {
         std::cout << "dt " << dt << " " << out_client.at(client) << std::endl;
         if (dependencies.server.server_state == State::Idle){
             dependencies.server.server_state = State::Run;
-            dependencies.monitor.put(std::make_shared<FinishEvent>(time + dt, type, client, dependencies));
+            dependencies.monitor.put(std::make_shared<FinishEvent>(time + dt, type,
+                                                                   client, dependencies));
             dependencies.server.working_start = time;
         }
         else {
@@ -75,7 +77,6 @@ namespace {
         }
         //planning for generation of next task
         dependencies.monitor.put(std::make_shared<RequestEvent>(time + request::get_pause_time(Planning(client)), type,
-                                                           client,dependencies));
-
+                                                                client,dependencies));
     }
 }
