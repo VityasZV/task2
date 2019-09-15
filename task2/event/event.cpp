@@ -16,16 +16,16 @@ namespace modeling::event{
 namespace {
     
     const auto& all_clients = [](){
-        return std::vector<const ClientId>{ClientId::First, ClientId::Second, ClientId::Third};
+        return std::vector<ClientId>{ClientId::First, ClientId::Second, ClientId::Third};
     }();
     const auto& clients_and_ints =[](){
         struct clients_and_ints {
-            std::unordered_map<const ClientId, const int> left {
+            const std::unordered_map<ClientId, int> left {
                 {ClientId::First, 1},
                 {ClientId::Second, 2},
                 {ClientId::Third, 3}
             };
-            std::unordered_map<int, const ClientId> right {
+            const std::unordered_map<int, ClientId> right {
                 {1, ClientId::First},
                 {2, ClientId::Second},
                 {3, ClientId::Third}
