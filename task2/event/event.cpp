@@ -59,7 +59,7 @@ namespace {
         //выводим запись о рабочем интервале time=finish_time
         std::cout << "Работа сервера:" << out_server.at(dependencies.server.server_id)<<
         " c " << dependencies.server.working_start << " по " << time << " длит. " <<
-        time - dependencies.server.working_start << std::endl;
+        time - dependencies.server.working_start << " from " <<out_client.at(client) << std::endl;
         if (!dependencies.server.request_order.empty()){
             const auto request = dependencies.server.request_order.front();
             dependencies.server.request_order.pop_front();
