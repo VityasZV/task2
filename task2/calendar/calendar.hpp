@@ -21,7 +21,7 @@ namespace event {
     public:
         EventType type;   // тип события
         const float time;
-        Event(float time, EventType type): time(time), type(type) {}
+        Event(float time): time(time){}
         virtual void processing() = 0;
         virtual ~Event() = default;
     };

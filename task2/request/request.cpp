@@ -18,13 +18,31 @@ namespace modeling::request {
         // when detailing the model, the function can be modified
         double r = ((double)rand())/RAND_MAX;
         std::cout << "request number: " << rc++ << std::endl;
-        if(source_num == ClientId::First) return r*10; else return r*20;
+        switch (source_num) {
+            case ClientId::First:
+                return r*10;
+            case ClientId::Second:
+                return r*15;
+                break;
+            case ClientId::Third:
+                return r*20;
+                break;
+        };
     }
     
     float get_pause_time(ClientId source_num) //pause duration between tasks
     {
         double p = ((double)rand())/RAND_MAX;
         std::cout << "pause " << pc << std::endl; pc++;
-        if(source_num == ClientId::First) return p*20; else return p*10;
+        switch (source_num) {
+              case ClientId::First:
+                  return p*20;
+              case ClientId::Second:
+                  return p*15;
+                  break;
+              case ClientId::Third:
+                  return p*10;
+                  break;
+         };
     }
 }// namespace request
