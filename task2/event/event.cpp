@@ -76,7 +76,8 @@ namespace {
             dependencies.server.request_order.emplace_back(std::make_shared<request::Request>(dt, client));
         }
         //planning for generation of next task
-        dependencies.monitor.put(std::make_shared<RequestEvent>(time + request::get_pause_time(Planning(client)),
-                                                                client,dependencies));
+        const auto&& next_client = Planning(client);
+        dependencies.monitor.put(std::make_shared<RequestEvent>(time + request::get_pause_time(next_client),
+                                                                next_client,dependencies));
     }
 }// namespace modeling::event
