@@ -28,7 +28,7 @@ namespace modeling {
             srand(2019);
             current_time = 0;
             dt = 0;
-            dependencies.monitor.put(std::make_shared<event::InitialEvent>(/*time =*/0, EventType::Initialization, dependencies, /*client =*/ std::nullopt));
+            dependencies.monitor.put(std::make_shared<event::InitialEvent>(/*time =*/0, dependencies, /*client =*/ std::nullopt));
         }
         void Start();
     };

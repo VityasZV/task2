@@ -18,7 +18,7 @@ namespace {
     const auto& all_clients = [](){
         return std::vector<ClientId>{ClientId::First, ClientId::Second, ClientId::Third};
     }();
-    const auto& clients_and_ints =[](){
+    const auto& clients_and_ints =[](){// kind of boost::bimap
         struct clients_and_ints {
             const std::unordered_map<ClientId, int> left {
                 {ClientId::First, 1},
@@ -43,8 +43,8 @@ namespace {
     
     void InitialEvent::processing() {
         for (const auto& client : all_clients){
-            dependencies.monitor.put(std::make_shared<RequestEvent>( time, EventType::Request,
-                                                                     client, dependencies));
+            dependencies.monitor.put(std::make_shared<RequestEvent>(time + request::get_pause_time(client),
+                                                                    client, dependencies));
         }
     }
     
@@ -57,10 +57,10 @@ namespace {
         if (!dependencies.server.request_order.empty()){
             const auto& request = dependencies.server.request_order.front();
             dependencies.server.request_order.pop_front();
-            dependencies.monitor.put(std::make_shared<FinishEvent>(time + request->time, type,
+            dependencies.monitor.put(std::make_shared<FinishEvent>(time + request->time,
                                                                    request->client, dependencies));
-            dependencies.server.working_start = time;
         }
+        dependencies.server.working_start = time;
     }
     
     void RequestEvent::processing() {
@@ -68,7 +68,7 @@ namespace {
         std::cout << "dt " << dt << " " << out_client.at(client) << std::endl;
         if (dependencies.server.server_state == State::Idle){
             dependencies.server.server_state = State::Run;
-            dependencies.monitor.put(std::make_shared<FinishEvent>(time + dt, type,
+            dependencies.monitor.put(std::make_shared<FinishEvent>(time + dt,
                                                                    client, dependencies));
             dependencies.server.working_start = time;
         }
@@ -76,7 +76,7 @@ namespace {
             dependencies.server.request_order.emplace_back(std::make_shared<request::Request>(dt, client));
         }
         //planning for generation of next task
-        dependencies.monitor.put(std::make_shared<RequestEvent>(time + request::get_pause_time(Planning(client)), type,
+        dependencies.monitor.put(std::make_shared<RequestEvent>(time + request::get_pause_time(Planning(client)),
                                                                 client,dependencies));
     }
 }// namespace modeling::event

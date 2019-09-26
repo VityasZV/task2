@@ -22,10 +22,12 @@ namespace modeling::event {
         ClientId client;
         const modeling::dependencies::Dependencies& dependencies;
     public:
-        FinishEvent(float finish_time, EventType type,
+        FinishEvent(float finish_time,
                     ClientId client,
                     const modeling::dependencies::Dependencies& dependencies) :
-                    Event(finish_time, type), client(client), dependencies(dependencies){}
+                    Event(finish_time), client(client), dependencies(dependencies){
+                        type = EventType::Finish;
+                    }
         void processing() override;
         ~FinishEvent() = default;
     };
@@ -34,9 +36,11 @@ namespace modeling::event {
         ClientId client;
         const modeling::dependencies::Dependencies& dependencies;
     public:
-        RequestEvent(float time, EventType type, ClientId client,
+        RequestEvent(float time, ClientId client,
                      const modeling::dependencies::Dependencies& dependencies):
-                        Event(time, type), client(client), dependencies(dependencies){}
+                        Event(time), client(client), dependencies(dependencies){
+                            type = EventType::Request;
+                        }
         void processing() override;
         ~RequestEvent() = default;
     };
@@ -44,11 +48,12 @@ namespace modeling::event {
     class InitialEvent : public Event {
         const modeling::dependencies::Dependencies& dependencies;
     public:
-      
-        InitialEvent(float time, EventType type,
+        InitialEvent(float time,
                      const modeling::dependencies::Dependencies& dependencies,
                      std::optional<ClientId> client = std::nullopt) :
-                        Event(time, type), dependencies(dependencies){}
+                        Event(time), dependencies(dependencies){
+                            type = EventType::Initialization;
+                        }
         void processing() override;
         ~InitialEvent() = default;
     };
